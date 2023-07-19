@@ -9,6 +9,7 @@ from fastapi import HTTPException
 
 from app.models.tariff_plan import TariffPlan
 from app.models.cargo_type import CargoType
+from app.controllers import transfers_service
 
 log = logging.getLogger('api_log')
 
@@ -62,6 +63,10 @@ class TariffPlanService:
 
     async def delete_tariff_plane(self, tariff_id: str) -> dict:
         tariff = await TariffPlan.get(id=uuid.UUID(tariff_id))
+        current = await transfers_service.get_current_tariff_plan()
+        if current.date == tariff.date:
+            raise HTTPException(403, f'Forbidden to delete current tariff plan.')
+
         try:
             await tariff.delete()
         except Exception as error:

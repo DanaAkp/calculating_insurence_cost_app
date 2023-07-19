@@ -26,8 +26,11 @@ class TransfersService:
         return {'insurance_cost': result}
 
     async def get_all_cargo_type(self) -> List[CargoType]:
-        current = await TariffPlan \
-            .filter(Q(date__lte=datetime.now().date())) \
-            .order_by('-date').first()
+        current = await self.get_current_tariff_plan()
         cargo_types = await CargoType.filter(tariff_plans__date=current.date).distinct().all()
         return cargo_types
+
+    async def get_current_tariff_plan(self) -> TariffPlan:
+        return await TariffPlan \
+            .filter(Q(date__lte=datetime.now().date())) \
+            .order_by('-date').first()

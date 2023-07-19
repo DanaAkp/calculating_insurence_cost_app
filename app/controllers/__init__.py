@@ -1,6 +1,5 @@
-from app.controllers.tariff_plan import TariffPlanService
 from app.controllers.transfers import TransfersService
-
-
-tariff_plan_service = TariffPlanService()
 transfers_service = TransfersService()
+
+from app.controllers.tariff_plan import TariffPlanService  # noqa fix circular import
+tariff_plan_service = TariffPlanService()
