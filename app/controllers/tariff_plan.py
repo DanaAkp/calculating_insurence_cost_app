@@ -2,11 +2,10 @@ import logging
 import datetime
 import traceback
 import uuid
-from typing import List, Union, Optional
+from typing import List, Union
 
 import tortoise.transactions
 from fastapi import HTTPException
-from tortoise.expressions import Q
 
 from app.models.tariff_plan import TariffPlan
 from app.models.cargo_type import CargoType
@@ -84,5 +83,5 @@ class TariffPlanService:
             await self._upload_from_dict_to_db(data)
         except Exception as error:
             log.error(f'Error: {error}, traceback: {traceback.format_exc()}')
-            raise HTTPException(400, f'Failed to upload tariff plans.')
+            raise HTTPException(400, 'Failed to upload tariff plans.')
         return {'success': True}

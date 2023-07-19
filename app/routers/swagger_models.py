@@ -1,9 +1,8 @@
 import uuid
 import datetime
-from typing import Optional, List, Dict, Union
+from typing import List, Dict, Union
 
 from pydantic import BaseModel, Field, validator
-from tortoise.contrib.pydantic import pydantic_model_creator  # todo
 
 
 class DataBaseModel(BaseModel):
