@@ -7,6 +7,7 @@ from typing import List, Union
 import tortoise.transactions
 from fastapi import HTTPException
 
+from app.config import SECRET
 from app.models.tariff_plan import TariffPlan
 from app.models.cargo_type import CargoType
 from app.controllers import transfers_service
@@ -90,3 +91,8 @@ class TariffPlanService:
             log.error(f'Error: {error}, traceback: {traceback.format_exc()}')
             raise HTTPException(400, 'Failed to upload tariff plans.')
         return {'success': True}
+
+    async def is_valid_token(self, token: str) -> bool:
+        if token == SECRET:
+            return True
+        return False
