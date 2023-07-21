@@ -19,7 +19,7 @@ Backend приложения "SocialNetworkingApp"
    ```
    docker compose up -d
    ```
-6. браузере открыть страницу http://localhost:8080/docs с документацией в формате OpenAPI.
+6. В браузере открыть страницу http://localhost:8080/docs с документацией в формате OpenAPI.
 7. После запуска создается запись о тарифном плане:
     ```json
     {
