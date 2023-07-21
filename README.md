@@ -1,4 +1,4 @@
-Backend приложения "SocialNetworkingApp"
+Backend приложения "CalculatingInsuranceCostApp"
 ---------------------
 
 ## Стек технологий
