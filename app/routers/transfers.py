@@ -17,7 +17,7 @@ transfers_router = APIRouter(
 )
 
 
-@transfers_router.get('/cargo_types', response_model=List[CargoTypeData])
+@transfers_router.get('/cargo_types')
 async def get_all_cargo_type() -> List:
     result = await service.get_all_cargo_type()
     return result

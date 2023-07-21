@@ -19,6 +19,8 @@ class TariffPlanService:
     async def create_tariff_plan(self, date: datetime.date, cargo_type: str, rate: float) -> TariffPlan:
         try:
             if result := await self._create_tariff_plan_in_db(date, cargo_type, rate):
+                await transfers_service.set_current_tariff_plans()
+                await transfers_service.set_current_cargo_types()
                 return result
         except Exception as error:
             log.error(f'Error: {error}, traceback: {traceback.format_exc()}')
@@ -46,6 +48,8 @@ class TariffPlanService:
     async def update_tariff_plan(self, tariff_plan_id: uuid.UUID, cargo_type_id: uuid.UUID, rate: float) -> TariffPlan:
         try:
             if result := await self._update_tariff_plan_in_db(tariff_plan_id, cargo_type_id, rate):
+                await transfers_service.set_current_tariff_plans()
+                await transfers_service.set_current_cargo_types()
                 return result
         except Exception as error:
             log.error(f'Error: {error}, traceback: {traceback.format_exc()}')
@@ -62,12 +66,13 @@ class TariffPlanService:
             await TariffPlan.bulk_update(objects=(tariff,), fields=('rate', 'cargo_type_id'))
             return tariff
 
-    async def delete_tariff_plane(self, tariff_id: str) -> dict:
-        tariff = await TariffPlan.get(id=uuid.UUID(tariff_id))
-        current = await transfers_service.get_current_tariff_plan()
-        if current.date == tariff.date:
-            raise HTTPException(403, f'Forbidden to delete current tariff plan.')
+    async def delete_tariff_plan(self, tariff_id: str) -> dict:
+        tariffs = await transfers_service.get_current_tariff_plans()
+        for i in tariffs:
+            if i.get('id') == tariff_id:
+                raise HTTPException(403, 'Forbidden to delete current tariff plan.')
 
+        tariff = await TariffPlan.get(id=uuid.UUID(tariff_id))
         try:
             await tariff.delete()
         except Exception as error:

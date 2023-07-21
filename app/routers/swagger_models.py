@@ -69,12 +69,6 @@ class CalculatingDataIn(DataBaseModel):
     declared_value: float
     cargo_type_id: uuid.UUID
 
-    @validator('cargo_type_id')
-    def validate_cargo_type_id(cls, value):
-        if isinstance(value, uuid.UUID):
-            return value
-        return uuid.UUID(value)
-
 
 class CalculatingData(DataBaseModel):
     insurance_cost: float

@@ -9,6 +9,8 @@ DB_USER_PASSWORD = os.environ.get('DB_USER_PASSWORD')
 DB_URL = f'postgres://{DB_USER_NAME}:{DB_USER_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
 
 SECRET = os.environ.get('SECRET')
+REDIS_HOST = os.environ.get('REDIS_HOST')
+REDIS_PORT = int(os.environ.get('REDIS_PORT'))
 
 
 log_config = {
