@@ -67,7 +67,7 @@ class CargoTypeData(DataBaseModel):
 
 class CalculatingDataIn(DataBaseModel):
     declared_value: float
-    cargo_type_id: uuid.UUID
+    cargo_type_id: str
 
 
 class CalculatingData(DataBaseModel):
