@@ -2,7 +2,7 @@ from typing import List
 
 from fastapi import APIRouter
 from app.controllers import transfers_service as service
-from app.routers.swagger_models import CargoTypeData, CalculatingDataIn, CalculatingData
+from app.routers.swagger_models import CalculatingDataIn, CalculatingData
 transfers_router = APIRouter(
     prefix='/transfers',
     tags=['Transfers'],
